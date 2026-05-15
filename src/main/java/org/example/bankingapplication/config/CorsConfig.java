@@ -20,6 +20,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
                     registry.addMapping("/**")
                             .allowedOrigins("https://java-banking.onrender.com","https://secure-bank-a1zahjfw8-saiprahlads-projects.vercel.app",
 //                                    "https://secure-bank-opal.vercel.app",
+                                    "secure-bank-git-main-saiprahlads-projects.vercel.app",
+                                    "secure-bank-8u26g2a7y-saiprahlads-projects.vercel.app",
                                     "http://localhost:3000")
                             .allowedMethods(
                                     "GET",
