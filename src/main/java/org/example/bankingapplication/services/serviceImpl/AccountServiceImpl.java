@@ -74,4 +74,50 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.delete(account);
 
     }
+
+    @Override
+    public void transferAmount(UUID fromId, UUID toId, double amount) {
+        Account fromAccount = accountRepository.findById(fromId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,"From User Not found"));
+
+        Account toAccount = accountRepository.findById(toId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,"To User Not found"));
+
+        if(fromAccount.getBalance() >= amount){
+            fromAccount.setBalance(fromAccount.getBalance() - amount);
+            toAccount.setBalance(toAccount.getBalance() + amount);
+
+            accountRepository.save(fromAccount);
+            accountRepository.save(toAccount);
+        }else{
+            throw new RuntimeException("Insufficient Balance");
+        }
+
+    }
+
+    @Override
+    public Object searchAccount(String query) {
+        try{
+            UUID id = UUID.fromString(query);
+            return getAccountById(id);
+        }catch (IllegalArgumentException e){
+            List<Account> accounts = accountRepository.findByAccountHolderName(query);
+            return accounts.stream().map(AccountMapper::mapToAccountDto).toList();
+        }
+    }
+
+//    public List<AccountDto> getByAccountHolderName(String accountHolderName){
+//        List<Account> accounts = accountRepository.getByAccountHolderName(accountHolderName);
+//
+//        if(accounts.isEmpty()){
+//            throw new ResponseStatusException(
+//                    HttpStatus.NOT_FOUND,
+//                    "Name not found"
+//            );
+//        }
+//        return accounts.stream().map(AccountMapper::mapToAccountDto).toList();
+//
+//    }
+
+
 }

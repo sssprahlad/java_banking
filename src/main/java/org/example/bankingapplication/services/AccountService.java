@@ -1,7 +1,7 @@
 package org.example.bankingapplication.services;
 
 import org.example.bankingapplication.Dto.AccountDto;
-import org.example.bankingapplication.entity.Account;
+
 import java.util.*;
 
 public interface AccountService {
@@ -13,4 +13,9 @@ public interface AccountService {
 
     void deleteAccount(UUID id);
     // AccountDto deleteAccount(UUID id);
+
+    void transferAmount(UUID fromId, UUID toId, double amount);
+
+    public Object searchAccount(String query);
+
 }

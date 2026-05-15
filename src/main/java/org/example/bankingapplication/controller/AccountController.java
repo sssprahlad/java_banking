@@ -1,6 +1,7 @@
 package org.example.bankingapplication.controller;
 
 import org.example.bankingapplication.Dto.AccountDto;
+import org.example.bankingapplication.Dto.TransferRequestDto;
 import org.example.bankingapplication.services.serviceImpl.AccountServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,13 @@ public class AccountController {
         return new ResponseEntity<>(service.getAccountById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity <?> searchAccount(@RequestParam String query){
+        return ResponseEntity.ok(
+                service.searchAccount(query)
+        );
+    }
+
     @PatchMapping("/{id}/deposit")
     public ResponseEntity<AccountDto> depositAmount(@PathVariable UUID id, @RequestBody Map<String, Double> request){
         double amount = request.get("amount");
@@ -63,6 +71,14 @@ public class AccountController {
     @GetMapping("/test")
     public String testing(){
         return "Hello world";
+    }
+
+
+    @PatchMapping("/transferAmount")
+    public ResponseEntity<String> transferAmount(@RequestBody TransferRequestDto request){
+        service.transferAmount(request.getSelectedFromAccount(),
+                request.getSelectedToAccount(),request.getTransferAmount());
+        return ResponseEntity.ok("Transfer Successful.");
     }
 
 

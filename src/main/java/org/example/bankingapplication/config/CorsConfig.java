@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
                 public void addCorsMappings(@NonNull CorsRegistry registry) {
 
                     registry.addMapping("/**")
-                            .allowedOrigins("https://java-banking.onrender.com",
+                            .allowedOrigins("https://java-banking.onrender.com","https://secure-bank-opal.vercel.app",
                                     "http://localhost:3000")
                             .allowedMethods(
                                     "GET",
